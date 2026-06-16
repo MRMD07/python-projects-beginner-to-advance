@@ -25,3 +25,29 @@ plt.xlabel("Variance Percentage (%)")
 plt.ylabel("Sub-Classification Line Item")
 plt.tight_layout()
 plt.show()  # <-- WHEN THIS WINDOW OPENS, CLOSE IT TO SEEN THE NEXT CHART
+
+inflation_target = 8.2  # Official Government Inflation Target
+nominal_yoy = ((budget_26 - revised_budget) / revised_budget) * 100
+
+plt.figure(figsize=(14, 7))
+
+
+filtered_indices = [i for i in range(len(labels)) if i not in [6, 9]]
+plot_labels = labels.iloc[filtered_indices]
+plot_growth = nominal_yoy.iloc[filtered_indices]
+
+# Green if it beats inflation, coral if it's a real-term spending cut
+colors = ['g' if x >= inflation_target else 'coral' for x in plot_growth]
+
+plt.barh(plot_labels, plot_growth, color=colors, edgecolor='black', height=0.6)
+plt.axvline(inflation_target, color='red', linestyle='--', linewidth=2, 
+            label=f'Official Inflation Target ({inflation_target}%)')
+
+plt.title("FY2026-27 New Budget Allocation Growth vs. 8.2% Inflation Target\n(Sectors in Orange are facing Real-Term Funding Slashes)", 
+          fontsize=12, fontweight='bold', pad=15)
+plt.xlabel("Nominal Year-on-Year Growth Rate (%)")
+plt.ylabel("Budgetary Line Item")
+plt.legend(loc='lower right')
+plt.grid(axis='x', linestyle=':', alpha=0.6)
+plt.tight_layout()
+plt.show()  # <-- CLOSE THIS WINDOW TO SEE THE FINAL MACRO CHART
