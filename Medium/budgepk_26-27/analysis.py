@@ -51,3 +51,24 @@ plt.legend(loc='lower right')
 plt.grid(axis='x', linestyle=':', alpha=0.6)
 plt.tight_layout()
 plt.show()  # <-- CLOSE THIS WINDOW TO SEE THE FINAL MACRO CHART
+
+macro_categories = ['Interest Payments\n(Debt Servicing)', 'Defence Affairs\n& Services', 'All 13 Social Sub-Sectors\nCombined (Health, Edu, Env)']
+macro_values = [8054, 3000, budget_26.sum() / 1000] # Millions scaled to Billions
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(macro_categories, macro_values, color=['crimson', 'midnightblue', 'darkorange'], edgecolor='black', width=0.5)
+
+# Add numeric text identifiers directly on top of the bars
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2., height + 100,
+             f'Rs. {height:,.1f} B',
+             ha='center', va='bottom', fontweight='bold')
+
+plt.title("Why New Social Budgets Cause Problems: The Federal Expenditure Straightjacket", 
+          fontsize=12, fontweight='bold', pad=15)
+plt.ylabel("Allocation Scale (Rs. in Billion)")
+plt.ylim(0, 9500)
+plt.grid(axis='y', linestyle=':', alpha=0.5)
+plt.tight_layout()
+plt.show()
